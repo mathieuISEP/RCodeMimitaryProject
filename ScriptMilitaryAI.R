@@ -1,10 +1,10 @@
 #set your working directory
 output=read.csv("outputtest.txt", sep=",", header=FALSE) #C'est outputtest, le petit sample de output dispo sur discord
-output["Message type"]<- NA
-output$`Message type`[output$V1=="PositionReportClassAScheduled{messageType=PositionReportClassAScheduled}"]=1
-output$`Message type`[output$V1=="PositionReportClassAResponseToInterrogation{messageType=PositionReportClassAResponseToInterrogation}"]=2
-output$`Message type`[output$V1=="StandardClassBCSPositionReport{messageType=StandardClassBCSPositionReport"]=3
-output$`Message type`[output$V1=="ShipAndVoyageData{messageType=ShipAndVoyageRelatedData"]=4
+output["NumberTypeMessage"]<- NA
+output$`NumberTypeMessage`[output$V1=="PositionReportClassAScheduled{messageType=PositionReportClassAScheduled}"]=1
+output$`NumberTypeMessage`[output$V1=="PositionReportClassAResponseToInterrogation{messageType=PositionReportClassAResponseToInterrogation}"]=2
+output$`NumberTypeMessage`[output$V1=="StandardClassBCSPositionReport{messageType=StandardClassBCSPositionReport"]=3
+output$`NumberTypeMessage`[output$V1=="ShipAndVoyageData{messageType=ShipAndVoyageRelatedData"]=4
 output$V2=gsub("^.*?=","", output$V2)
 output$V3=gsub("^.*?=","", output$V3)
 output$V4=gsub("^.*?=","", output$V4)
@@ -20,6 +20,7 @@ output$V20=gsub("^.*?=","", output$V20)
 output$V21=gsub("^.*?=","", output$V21)
 output$V22=gsub("^.*?=","", output$V22)
 output$V23=gsub("^.*?=","", output$V23)
-colnames(output) <- c("MessageType", "NavigationStatus", "RateOfTurn", "SpeedOverGround", "PositionAccuracy", "Latitude", "Longitude", "CourseOverGround", "TrueHeading", "Timestamp", "specialManeuverIndicator", "raimFlag", "AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB", "Data", "Data1", "Metadata", "Received", "repeatIndicator", "sourceMmsi")
+colnames(output) <- c("MessageType", "NavigationStatus", "RateOfTurn", "SpeedOverGround", "PositionAccuracy", "Latitude", "Longitude", "CourseOverGround", "TrueHeading", "Timestamp", "specialManeuverIndicator", "raimFlag", "AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB", "Data", "Data1", "Metadata", "Received", "repeatIndicator", "sourceMmsi","NumberTypeMessage")
 output <- output[,c(24,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23)]
-View(output)
+attach(output)
+output1 = output[which(NumberTypeMessage == 1),]
