@@ -24,3 +24,11 @@ colnames(output) <- c("MessageType", "NavigationStatus", "RateOfTurn", "SpeedOve
 output <- output[,c(24,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23)]
 attach(output)
 output1 = output[which(NumberTypeMessage == 1),]
+
+#Calculate Distance from  Latitude and Longitude
+library(geosphere)
+pos1 = c(Latitude[1],Longitude[1])
+pos2 = c(Latitude[2],Longitude[2])
+distm (pos1,pos2, fun = distHaversine)
+
+
