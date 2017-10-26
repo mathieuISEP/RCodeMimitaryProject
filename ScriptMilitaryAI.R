@@ -1,5 +1,5 @@
 #set your working directory
-output=read.csv("outputtest.txt", sep=",", header=FALSE) #C'est outputtest, le petit sample de output dispo sur discord
+output=read.csv("output.txt", sep=",", header=FALSE) #C'est outputtest, le petit sample de output dispo sur discord
 output["NumberTypeMessage"]<- NA
 output$`NumberTypeMessage`[output$V1=="PositionReportClassAScheduled{messageType=PositionReportClassAScheduled}"]=1
 output$`NumberTypeMessage`[output$V1=="PositionReportClassAResponseToInterrogation{messageType=PositionReportClassAResponseToInterrogation}"]=2
@@ -24,3 +24,6 @@ colnames(output) <- c("MessageType", "NavigationStatus", "RateOfTurn", "SpeedOve
 output <- output[,c(24,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23)]
 attach(output)
 output1 = output[which(NumberTypeMessage == 1),]
+output2 = output[which(NumberTypeMessage == 2),]
+output$Latitude = as.numeric(as.character(output$Latitude))
+output$Longitude = as.numeric(as.character(output$Longitude))
