@@ -5,6 +5,14 @@ output$`NumberTypeMessage`[output$V1=="PositionReportClassAScheduled{messageType
 output$`NumberTypeMessage`[output$V1=="PositionReportClassAResponseToInterrogation{messageType=PositionReportClassAResponseToInterrogation}"]=2
 output$`NumberTypeMessage`[output$V1=="StandardClassBCSPositionReport{messageType=StandardClassBCSPositionReport"]=3
 output$`NumberTypeMessage`[output$V1=="ShipAndVoyageData{messageType=ShipAndVoyageRelatedData"]=4
+output$`NumberTypeMessage`[output$V1=="BaseStationReport{messageType=BaseStationReport"]=5
+output$`NumberTypeMessage`[output$V1=="PositionReportClassAAssignedSchedule{messageType=PositionReportClassAAssignedSchedule}"]=6
+output$`NumberTypeMessage`[output$V1=="AidToNavigationReport{messageType=AidToNavigationReport"]=7
+output$`NumberTypeMessage`[output$V1=="ExtendedClassBEquipmentPositionReport{messageType=ExtendedClassBEquipmentPositionReport"]=8
+output$`NumberTypeMessage`[output$V1=="DataLinkManagement{messageType=DataLinkManagement"]=9
+output$`NumberTypeMessage`[output$V1=="BinaryBroadcastMessage{messageType=BinaryBroadcastMessage"]=10
+output$`NumberTypeMessage`[output$V1=="GNSSBinaryBroadcastMessage{messageType=GNSSBinaryBroadcastMessage"]=11
+new_DF <- output[rowSums(is.na(output)) > 0,] #A compléter pour numbertypemessage
 output$V2=gsub("^.*?=","", output$V2)
 output$V3=gsub("^.*?=","", output$V3)
 output$V4=gsub("^.*?=","", output$V4)
@@ -23,17 +31,27 @@ output$V23=gsub("[[:punct:][:lower:][:upper:]]","", output$V23)
 colnames(output) <- c("MessageType", "NavigationStatus", "RateOfTurn", "SpeedOverGround", "PositionAccuracy", "Latitude", "Longitude", "CourseOverGround", "TrueHeading", "Timestamp", "specialManeuverIndicator", "raimFlag", "AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB", "Data", "Data1", "Metadata", "Received", "repeatIndicator", "sourceMmsi","NumberTypeMessage")
 output <- output[,c(24,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23)]
 attach(output)
+
 output$Timestamp=as.numeric(output$Timestamp)
 output$sourceMmsi=as.numeric(output$sourceMmsi)
+
+
+
 output1 = output[which(NumberTypeMessage == 1),]
 output2 = output[which(NumberTypeMessage == 2),]
+output3 = output[which(NumberTypeMessage == 3 | MessageType == 'A'| MessageType == 'B'),]
+output4 = output[which(NumberTypeMessage == 4 | MessageType == 2),]
+output$Latitude = as.numeric(output$Latitude)
+output$Longitude = as.numeric(output$Longitude)
+
+
 
 a = output1[which(output1$sourceMmsi == 227006760),]
+
 a = a[order(a$Timestamp),]
+
 #Calculate Distance from  Latitude and Longitude
 library(geosphere)
-pos1 = as.numeric(c(Latitude[1],Longitude[1]))
-pos2 = as.numeric(c(Latitude[2],Longitude[2]))
+pos1 = (c(Latitude[1],Longitude[1]))
+pos2 = (c(Latitude[2],Longitude[2]))
 distm (pos1,pos2, fun = distHaversine)
-
-
