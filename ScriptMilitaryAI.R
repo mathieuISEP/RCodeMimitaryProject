@@ -19,16 +19,13 @@ output$V12=gsub("^.*?=","", output$V12)
 output$V20=gsub("^.*?=","", output$V20)
 output$V21=gsub("^.*?=","", output$V21)
 output$V22=gsub("^.*?=","", output$V22)
-output$V23=gsub("^.*?=","", output$V23)
+output$V23=gsub("[[:punct:][:lower:][:upper:]]","", output$V23)
 colnames(output) <- c("MessageType", "NavigationStatus", "RateOfTurn", "SpeedOverGround", "PositionAccuracy", "Latitude", "Longitude", "CourseOverGround", "TrueHeading", "Timestamp", "specialManeuverIndicator", "raimFlag", "AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB", "Data", "Data1", "Metadata", "Received", "repeatIndicator", "sourceMmsi","NumberTypeMessage")
 output <- output[,c(24,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23)]
 attach(output)
 output1 = output[which(NumberTypeMessage == 1),]
-<<<<<<< HEAD
 output2 = output[which(NumberTypeMessage == 2),]
-output$Latitude = as.numeric(as.character(output$Latitude))
-output$Longitude = as.numeric(as.character(output$Longitude))
-=======
+
 
 #Calculate Distance from  Latitude and Longitude
 library(geosphere)
@@ -37,4 +34,3 @@ pos2 = as.numeric(c(Latitude[2],Longitude[2]))
 distm (pos1,pos2, fun = distHaversine)
 
 
->>>>>>> 0fec16f5f3455caa218395d930e581f286e081a6
