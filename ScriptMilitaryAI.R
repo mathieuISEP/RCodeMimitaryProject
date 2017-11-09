@@ -32,8 +32,8 @@ output$Longitude = as.numeric(as.character(output$Longitude))
 
 #Calculate Distance from  Latitude and Longitude
 library(geosphere)
-pos1 = c(Latitude[1],Longitude[1])
-pos2 = c(Latitude[2],Longitude[2])
+pos1 = as.numeric(c(Latitude[1],Longitude[1]))
+pos2 = as.numeric(c(Latitude[2],Longitude[2]))
 distm (pos1,pos2, fun = distHaversine)
 
 
