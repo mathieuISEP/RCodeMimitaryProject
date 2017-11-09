@@ -23,12 +23,13 @@ output$V23=gsub("[[:punct:][:lower:][:upper:]]","", output$V23)
 colnames(output) <- c("MessageType", "NavigationStatus", "RateOfTurn", "SpeedOverGround", "PositionAccuracy", "Latitude", "Longitude", "CourseOverGround", "TrueHeading", "Timestamp", "specialManeuverIndicator", "raimFlag", "AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB", "Data", "Data1", "Metadata", "Received", "repeatIndicator", "sourceMmsi","NumberTypeMessage")
 output <- output[,c(24,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23)]
 attach(output)
+output$Timestamp=as.numeric(output$Timestamp)
 output$sourceMmsi=as.numeric(output$sourceMmsi)
 output1 = output[which(NumberTypeMessage == 1),]
 output2 = output[which(NumberTypeMessage == 2),]
 
 a = output1[which(output1$sourceMmsi == 227006760),]
-
+a = a[order(a$Timestamp),]
 #Calculate Distance from  Latitude and Longitude
 library(geosphere)
 pos1 = as.numeric(c(Latitude[1],Longitude[1]))
