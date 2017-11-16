@@ -1,7 +1,13 @@
 #set your working directory
 #output=read.csv("output.txt", sep=",", header=FALSE)
+
+#chargement du fichier
 output=read.csv("outputtry.txt", sep=",", header=FALSE)
+
+#création de la colonne NumberTypeMessage
 output["NumberTypeMessage"]<- NA
+
+#Nomenclature des différents types de messages
 output$`NumberTypeMessage`[output$V1=="PositionReportClassAScheduled{messageType=PositionReportClassAScheduled}"]=1
 output$`NumberTypeMessage`[output$V1=="PositionReportClassAResponseToInterrogation{messageType=PositionReportClassAResponseToInterrogation}"]=2
 output$`NumberTypeMessage`[output$V1=="StandardClassBCSPositionReport{messageType=StandardClassBCSPositionReport"]=3
@@ -23,37 +29,50 @@ output$`NumberTypeMessage`[output$V1=="UTCAndDateResponse{messageType=UTCAndDate
 output$`NumberTypeMessage`[output$V1=="ChannelManagement{messageType=ChannelManagement"]=19
 output$`NumberTypeMessage`[output$V1=="ChannelManagement{messageType=ChannelManagement"]=20
 output$`NumberTypeMessage`[output$V1=="ChannelManagement{messageType=ChannelManagement"]=21
+output <- output[,c(39,1:38)]
 
-
-new_DF <- output[rowSums(is.na(output)) > 0,] #A compléter pour numbertypemessage
-output$V2=gsub("^.*?=","", output$V2)
-output$V3=gsub("^.*?=","", output$V3)
-output$V4=gsub("^.*?=","", output$V4)
-output$V5=gsub("^.*?=","", output$V5)
-output$V6=gsub("^.*?=","", output$V6)
-output$V7=gsub("^.*?=","", output$V7)
-output$V8=gsub("^.*?=","", output$V8)
-output$V9=gsub("^.*?=","", output$V9)
-output$V10=gsub("^.*?=","", output$V10)
-output$V11=gsub("^.*?=","", output$V11)
-output$V12=gsub("^.*?=","", output$V12)
-output$V20=gsub("^.*?=","", output$V20)
-output$V21=gsub("^.*?=","", output$V21)
-output$V22=gsub("^.*?=","", output$V22)
-output$V23=gsub("[[:punct:][:lower:][:upper:]]","", output$V23)
-colnames(output) <- c("MessageType", "NavigationStatus", "RateOfTurn", "SpeedOverGround", "PositionAccuracy", "Latitude", "Longitude", "CourseOverGround", "TrueHeading", "Timestamp", "specialManeuverIndicator", "raimFlag", "AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB", "Data", "Data1", "Metadata", "Received", "repeatIndicator", "sourceMmsi","NumberTypeMessage")
-output <- output[,c(24,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23)]
+#Tri par type
 attach(output)
+output1 = output[which(NumberTypeMessage == 1),]
+output2 = output[which(NumberTypeMessage == 2),]
+output3 = output[which(NumberTypeMessage == 3),]
+output4 = output[which(NumberTypeMessage == 4),]
+output5 = output[which(NumberTypeMessage == 5),]
+output6 = output[which(NumberTypeMessage == 6),]
+output7 = output[which(NumberTypeMessage == 7),]
+output8 = output[which(NumberTypeMessage == 8),]
+
+
+#traitement des colonnes par type de message
+# pour les messages de type 1
+output1$V2=gsub("^.*?=","", output1$V2)
+output1$V3=gsub("^.*?=","", output1$V3)
+output1$V4=gsub("^.*?=","", output1$V4)
+output1$V5=gsub("^.*?=","", output1$V5)
+output1$V6=gsub("^.*?=","", output1$V6)
+output1$V7=gsub("^.*?=","", output1$V7)
+output1$V8=gsub("^.*?=","", output1$V8)
+output1$V9=gsub("^.*?=","", output1$V9)
+output1$V10=gsub("^.*?=","", output1$V10)
+output1$V11=gsub("^.*?=","", output1$V11)
+output1$V12=gsub("^.*?=","", output1$V12)
+output1$V20=gsub("^.*?=","", output1$V20)
+output1$V21=gsub("^.*?=","", output1$V21)
+output1$V22=gsub("^.*?=","", output1$V22)
+output1$V23=gsub("[[:punct:][:lower:][:upper:]]","", output1$V23)
+colnames(output1) <- c("MessageType", "NavigationStatus", "RateOfTurn", "SpeedOverGround", "PositionAccuracy", "Latitude", "Longitude", "CourseOverGround", "TrueHeading", "Timestamp", "specialManeuverIndicator", "raimFlag", "AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB", "Data", "Data1", "Metadata", "Received", "repeatIndicator", "sourceMmsi","NumberTypeMessage")
+
+
+
+
+#new_DF <- output[rowSums(is.na(output)) > 0,] #A compléter pour numbertypemessage
 
 output$Timestamp=as.numeric(output$Timestamp)
 output$sourceMmsi=as.numeric(output$sourceMmsi)
 
 
 
-output1 = output[which(NumberTypeMessage == 1),]
-output2 = output[which(NumberTypeMessage == 2),]
-output3 = output[which(NumberTypeMessage == 3 | MessageType == 'A'| MessageType == 'B'),]
-output4 = output[which(NumberTypeMessage == 4 | MessageType == 2),]
+
 output$Latitude = as.numeric(output$Latitude)
 output$Longitude = as.numeric(output$Longitude)
 
