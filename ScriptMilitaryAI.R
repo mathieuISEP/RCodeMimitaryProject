@@ -1,5 +1,6 @@
 #set your working directory
-output=read.csv("output.txt", sep=",", header=FALSE) #C'est outputtest, le petit sample de output dispo sur discord
+#output=read.csv("output.txt", sep=",", header=FALSE)
+output=read.csv("outputtry.txt", sep=",", header=FALSE)
 output["NumberTypeMessage"]<- NA
 output$`NumberTypeMessage`[output$V1=="PositionReportClassAScheduled{messageType=PositionReportClassAScheduled}"]=1
 output$`NumberTypeMessage`[output$V1=="PositionReportClassAResponseToInterrogation{messageType=PositionReportClassAResponseToInterrogation}"]=2
@@ -12,6 +13,18 @@ output$`NumberTypeMessage`[output$V1=="ExtendedClassBEquipmentPositionReport{mes
 output$`NumberTypeMessage`[output$V1=="DataLinkManagement{messageType=DataLinkManagement"]=9
 output$`NumberTypeMessage`[output$V1=="BinaryBroadcastMessage{messageType=BinaryBroadcastMessage"]=10
 output$`NumberTypeMessage`[output$V1=="GNSSBinaryBroadcastMessage{messageType=GNSSBinaryBroadcastMessage"]=11
+output$`NumberTypeMessage`[output$V1=="AddressedBinaryMessage{messageType=AddressedBinaryMessage"]=12
+output$`NumberTypeMessage`[output$V1=="UTCAndDateInquiry{messageType=UTCAndDateInquiry"]=13
+output$`NumberTypeMessage`[output$V1=="StandardSARAircraftPositionReport{messageType=StandardSARAircraftPositionReport"]=14
+output$`NumberTypeMessage`[output$V1=="StandardSARAircraftPositionReport{messageType=StandardSARAircraftPositionReport"]=15
+output$`NumberTypeMessage`[output$V1=="ClassBCSStaticDataReport{messageType=ClassBCSStaticDataReport"]=16
+output$`NumberTypeMessage`[output$V1=="ChannelManagement{messageType=ChannelManagement"]=17
+output$`NumberTypeMessage`[output$V1=="UTCAndDateResponse{messageType=UTCAndDateResponse"]=18
+output$`NumberTypeMessage`[output$V1=="ChannelManagement{messageType=ChannelManagement"]=19
+output$`NumberTypeMessage`[output$V1=="ChannelManagement{messageType=ChannelManagement"]=20
+output$`NumberTypeMessage`[output$V1=="ChannelManagement{messageType=ChannelManagement"]=21
+
+
 new_DF <- output[rowSums(is.na(output)) > 0,] #A compléter pour numbertypemessage
 output$V2=gsub("^.*?=","", output$V2)
 output$V3=gsub("^.*?=","", output$V3)
