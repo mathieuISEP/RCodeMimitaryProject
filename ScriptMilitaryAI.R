@@ -102,13 +102,33 @@ output3$V17=gsub("^.*?=","", output3$V17)
 output3$V18=gsub("^.*?=","", output3$V18)
 output3$V19=gsub("^.*?=","", output3$V19)
 output3$V20=gsub("^.*?=","", output3$V20)
-output3$V21=gsub("^.*?=","", output3$V27)
-output3$V22=gsub("^.*?=","", output3$V28)
-output3$V11=gsub("^.*?=","", output3$V29)
-output3$V12=gsub("^.*?=","", output3$V30)
+output3$V27=gsub("^.*?=","", output3$V27)
+output3$V28=gsub("^.*?=","", output3$V28)
+output3$V29=gsub("^.*?=","", output3$V29)
+output3$V30=gsub("[[:punct:][:lower:][:upper:]]","", output3$V30)
 colnames(output3) <- c("NumberTypeMessage","MessageType", "RegionalReserved1", "SpeedOverGround", "PositionAccurate", "Latitude", "Longitude", "CourseOverGround", "TrueHeading", "Second", "RegionalReserved2", "CsUnit", "display", "dsc", "band", "message22", "assigned", "raimFlag", "commStateSelectorFlag", "commState", "AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB","Data","Data1","Metadata", "Received","repeatIndicator", "sourceMmsi")
+output3 = output3[,-c(28,29)]
 
-
+# pour les messages de type 4
+output4$V2=gsub("^.*?=","", output4$V2)
+output4$V3=gsub("^.*?=","", output4$V3)
+output4$V4=gsub("^.*?=","", output4$V4)
+output4$V5=gsub("^.*?=","", output4$V5)
+output4$V6=gsub("^.*?=","", output4$V6)
+output4$V7=gsub("^.*?=","", output4$V7)
+output4$V8=gsub("^.*?=","", output4$V8)
+output4$V9=gsub("^.*?=","", output4$V9)
+output4$V10=gsub("^.*?=","", output4$V10)
+output4$V11=gsub("^.*?=","", output4$V11)
+output4$V12=gsub("^.*?=","", output4$V12)
+output4$V13=gsub("^.*?=","", output4$V13)
+output4$V14=gsub("^.*?=","", output4$V14)
+output4$V15=gsub("^.*?=","", output4$V15)
+output4$V29=gsub("^.*?=","", output4$V29)
+output4$V30=gsub("^.*?=","", output4$V30)
+output4$V31=gsub("^.*?=","", output4$V31)
+output4$V32=gsub("[[:punct:][:lower:][:upper:]]","", output4$V32)
+colnames(output4) <- c("NumberTypeMessage","MessageType", "imo", "callsign", "shipname", "shipType","toBow","toStern","toStarboard","toPort","positionFixingDevice","eta","draught","destination","dataTerminalReady","", "", "", "", "", "", "","", "", "", "", "", "", "", "Metadata", "Received", "repeatIndicator", "sourceMmsi")
 
 
 #new_DF <- output[rowSums(is.na(output)) > 0,] #A compléter pour numbertypemessage
