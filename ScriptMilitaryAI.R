@@ -117,12 +117,10 @@ output$Timestamp=as.numeric(output$Timestamp)
 output$sourceMmsi=as.numeric(output$sourceMmsi)
 
 
+output1$Latitude = as.numeric(output1$Latitude)
+output1$Longitude = as.numeric(output1$Longitude)
 
-
-output$Latitude = as.numeric(output$Latitude)
-output$Longitude = as.numeric(output$Longitude)
-
-
+attach(output1)
 
 a = output1[which(output1$sourceMmsi == 227006760),]
 
@@ -130,6 +128,8 @@ a = a[order(a$Timestamp),]
 
 #Calculate Distance from  Latitude and Longitude
 library(geosphere)
-pos1 = (c(Latitude[1],Longitude[1]))
-pos2 = (c(Latitude[2],Longitude[2]))
-distm (pos1,pos2, fun = distHaversine)
+pos1 = (c(Latitude[7],Longitude[7]))
+pos2 = (c(Latitude[8],Longitude[8]))
+earthDist(Latitude[7],Longitude[7],Latitude[8],Longitude[8])
+
+shipTrajectory(227006760,output1)
