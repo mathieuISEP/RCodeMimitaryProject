@@ -154,7 +154,10 @@ a = output1[which(output1$sourceMmsi == 227006760),]
 
 shipTrajectory(227006760,output1)
 
-
+#install.packages("rworldmap")
+#install.packages("rworldxtra")
+library(rworldmap)
+library(rworldxtra)
 bb = qbbox(lat = a$Latitude,lon = a$Longitude)
 map = GetMap.bbox(bb$lonR,bb$latR,destfile = "cartographie.png",maptype="hybrid")
 PlotOnStaticMap(map,lat=a$Latitude,lon = a$Longitude,destfile = "cartographie.png",cex=2,pch=20)
