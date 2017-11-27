@@ -153,3 +153,12 @@ a = output1[which(output1$sourceMmsi == 227006760),]
 #earthDist(Latitude[7],Longitude[7],Latitude[8],Longitude[8])
 
 shipTrajectory(227006760,output1)
+
+
+bb = qbbox(lat = a$Latitude,lon = a$Longitude)
+map = GetMap.bbox(bb$lonR,bb$latR,destfile = "cartographie.png",maptype="hybrid")
+PlotOnStaticMap(map,lat=a$Latitude,lon = a$Longitude,destfile = "cartographie.png",cex=2,pch=20)
+
+newmap <- getMap(resolution = "high")
+plot(newmap,xlim = c(115, 182), ylim = c(30, 92), asp = 1)
+points(a$Longitude,a$Latitude,col="red",cex=1,pch=20)
