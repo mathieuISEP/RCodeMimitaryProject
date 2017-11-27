@@ -133,23 +133,24 @@ colnames(output4) <- c("NumberTypeMessage","MessageType", "imo", "callsign", "sh
 
 #new_DF <- output[rowSums(is.na(output)) > 0,] #A compléter pour numbertypemessage
 
-output$Timestamp=as.numeric(output$Timestamp)
-output$sourceMmsi=as.numeric(output$sourceMmsi)
+output1$Timestamp=as.numeric(output1$Timestamp)
+output1$sourceMmsi=as.numeric(output1$sourceMmsi)
 
 
-output1$Latitude = as.numeric(output1$Latitude)
-output1$Longitude = as.numeric(output1$Longitude)
+output1$Latitude = as.double(output1$Latitude)
+output1$Longitude = as.double(output1$Longitude)
 
 attach(output1)
 
 a = output1[which(output1$sourceMmsi == 227006760),]
 
-a = a[order(a$Timestamp),]
+#a = a[order(a$Timestamp),]
 
 #Calculate Distance from  Latitude and Longitude
 library(geosphere)
-pos1 = (c(Latitude[7],Longitude[7]))
-pos2 = (c(Latitude[8],Longitude[8]))
-earthDist(Latitude[7],Longitude[7],Latitude[8],Longitude[8])
+#pos1 = (c(output1$Latitude[7],output1$Longitude[7]))
+#pos2 = (c(output1$Latitude[8],output1$Longitude[8]))
+#earthDist(Latitude[7],Longitude[7],Latitude[8],Longitude[8])
 
 shipTrajectory(227006760,output1)
+s
