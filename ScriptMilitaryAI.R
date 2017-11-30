@@ -30,9 +30,9 @@ output$`NumberTypeMessage`[output$V1=="ChannelManagement{messageType=ChannelMana
 output$`NumberTypeMessage`[output$V1=="ChannelManagement{messageType=ChannelManagement"]=20
 output$`NumberTypeMessage`[output$V1=="ChannelManagement{messageType=ChannelManagement"]=21
 output <- output[,c(39,1:38)]
+attach(output)
 
 #Tri par type
-attach(output)
 output1 = output[which(NumberTypeMessage == 1),]
 output2 = output[which(NumberTypeMessage == 2),]
 output3 = output[which(NumberTypeMessage == 3),]
@@ -133,8 +133,8 @@ colnames(output4) <- c("NumberTypeMessage","MessageType", "imo", "callsign", "sh
 
 #new_DF <- output[rowSums(is.na(output)) > 0,] #A compléter pour numbertypemessage
 
-output$Timestamp=as.numeric(output$Timestamp)
-output$sourceMmsi=as.numeric(output$sourceMmsi)
+output1$Timestamp=as.numeric(output1$Timestamp)
+output1$sourceMmsi=as.numeric(output1$sourceMmsi)
 
 
 output1$Latitude = as.numeric(output1$Latitude)
@@ -144,7 +144,7 @@ attach(output1)
 
 a = output1[which(output1$sourceMmsi == 227006760),]
 
-a = a[order(a$Timestamp),]
+#a = a[order(a$Timestamp),]
 
 #Calculate Distance from  Latitude and Longitude
 library(geosphere)
