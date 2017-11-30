@@ -107,7 +107,7 @@ output3$V28=gsub("^.*?=","", output3$V28)
 output3$V29=gsub("^.*?=","", output3$V29)
 output3$V30=gsub("[[:punct:][:lower:][:upper:]]","", output3$V30)
 colnames(output3) <- c("NumberTypeMessage","MessageType", "RegionalReserved1", "SpeedOverGround", "PositionAccurate", "Latitude", "Longitude", "CourseOverGround", "TrueHeading", "Second", "RegionalReserved2", "CsUnit", "display", "dsc", "band", "message22", "assigned", "raimFlag", "commStateSelectorFlag", "commState", "AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB","Data","Data1","Metadata", "Received","repeatIndicator", "sourceMmsi")
-output3 = output3[,-c(28,29)]
+output3 = output3[,-c(28,29,32:39)]
 
 # pour les messages de type 4
 output4$V2=gsub("^.*?=","", output4$V2)
@@ -128,7 +128,8 @@ output4$V29=gsub("^.*?=","", output4$V29)
 output4$V30=gsub("^.*?=","", output4$V30)
 output4$V31=gsub("^.*?=","", output4$V31)
 output4$V32=gsub("[[:punct:][:lower:][:upper:]]","", output4$V32)
-colnames(output4) <- c("NumberTypeMessage","MessageType", "imo", "callsign", "shipname", "shipType","toBow","toStern","toStarboard","toPort","positionFixingDevice","eta","draught","destination","dataTerminalReady","", "", "", "", "", "", "","", "", "", "", "", "", "", "Metadata", "Received", "repeatIndicator", "sourceMmsi")
+colnames(output4) <- c("NumberTypeMessage","MessageType", "imo", "callsign", "shipname", "shipType","toBow","toStern","toStarboard","toPort","positionFixingDevice","eta","draught","destination","dataTerminalReady","AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB","Data","Data1","NMEAMessage", "SyncState", "SlotTime-out", "Undefined", "AB","Data","Data1", "Metadata", "Received", "repeatIndicator", "sourceMmsi")
+output4 = output4[,-c(30,31,34:39)]
 
 
 #new_DF <- output[rowSums(is.na(output)) > 0,] #A compléter pour numbertypemessage
@@ -147,9 +148,21 @@ a = output1[which(output1$sourceMmsi == 227006760),]
 #a = a[order(a$Timestamp),]
 
 #Calculate Distance from  Latitude and Longitude
-library(geosphere)
-pos1 = (c(Latitude[7],Longitude[7]))
-pos2 = (c(Latitude[8],Longitude[8]))
-earthDist(Latitude[7],Longitude[7],Latitude[8],Longitude[8])
+#library(geosphere)
+#pos1 = (c(output1$Latitude[7],output1$Longitude[7]))
+#pos2 = (c(output1$Latitude[8],output1$Longitude[8]))
+#earthDist(Latitude[7],Longitude[7],Latitude[8],Longitude[8])
 
 shipTrajectory(227006760,output1)
+
+#install.packages("rworldmap")
+#install.packages("rworldxtra")
+library(rworldmap)
+library(rworldxtra)
+bb = qbbox(lat = a$Latitude,lon = a$Longitude)
+map = GetMap.bbox(bb$lonR,bb$latR,destfile = "cartographie.png",maptype="hybrid")
+PlotOnStaticMap(map,lat=a$Latitude,lon = a$Longitude,destfile = "cartographie.png",cex=2,pch=20)
+
+newmap <- getMap(resolution = "high")
+plot(newmap,xlim = c(115, 182), ylim = c(30, 92), asp = 1)
+points(a$Longitude,a$Latitude,col="red",cex=1,pch=20)
