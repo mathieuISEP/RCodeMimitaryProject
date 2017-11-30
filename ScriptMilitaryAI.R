@@ -45,6 +45,7 @@ output8 = output[which(NumberTypeMessage == 8),]
 
 #traitement des colonnes par type de message
 # pour les messages de type 1
+#suprression des éléments inutiles dans les colonnes 
 output1$V2=gsub("^.*?=","", output1$V2)
 output1$V3=gsub("^.*?=","", output1$V3)
 output1$V4=gsub("^.*?=","", output1$V4)
@@ -60,10 +61,13 @@ output1$V20=gsub("^.*?=","", output1$V20)
 output1$V21=gsub("^.*?=","", output1$V21)
 output1$V22=gsub("^.*?=","", output1$V22)
 output1$V23=gsub("[[:punct:][:lower:][:upper:]]","", output1$V23)
+#nomenclature des colonnes
 colnames(output1) <- c("NumberTypeMessage","MessageType", "NavigationStatus", "RateOfTurn", "SpeedOverGround", "PositionAccuracy", "Latitude", "Longitude", "CourseOverGround", "TrueHeading", "Timestamp", "specialManeuverIndicator", "raimFlag", "AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB", "Data", "Data1", "Metadata", "Received", "repeatIndicator", "sourceMmsi")
+#supression des colonnes inutiles
 output1 = output1[,-c(21,22,25:39)]
 
 # pour les messages de type 2
+#suprression des éléments inutiles dans les colonnes 
 output2$V2=gsub("^.*?=","", output2$V2)
 output2$V3=gsub("^.*?=","", output2$V3)
 output2$V4=gsub("^.*?=","", output2$V4)
@@ -79,10 +83,13 @@ output2$V20=gsub("^.*?=","", output2$V20)
 output2$V21=gsub("^.*?=","", output2$V21)
 output2$V22=gsub("^.*?=","", output2$V22)
 output2$V23=gsub("[[:punct:][:lower:][:upper:]]","", output2$V23)
+#nomenclature des colonnes
 colnames(output2) <- c("NumberTypeMessage","MessageType", "NavigationStatus", "RateOfTurn", "SpeedOverGround", "PositionAccuracy", "Latitude", "Longitude", "CourseOverGround", "TrueHeading", "Timestamp", "specialManeuverIndicator", "raimFlag", "AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB", "Data", "Data1", "Metadata", "Received", "repeatIndicator", "sourceMmsi")
+#supression des colonnes inutiles
 output2 = output2[,-c(21,22,25:39)]
 
 # pour les messages de type 3
+#suprression des éléments inutiles dans les colonnes 
 output3$V2=gsub("^.*?=","", output3$V2)
 output3$V3=gsub("^.*?=","", output3$V3)
 output3$V4=gsub("^.*?=","", output3$V4)
@@ -106,10 +113,13 @@ output3$V27=gsub("^.*?=","", output3$V27)
 output3$V28=gsub("^.*?=","", output3$V28)
 output3$V29=gsub("^.*?=","", output3$V29)
 output3$V30=gsub("[[:punct:][:lower:][:upper:]]","", output3$V30)
+#nomenclature des colonnes
 colnames(output3) <- c("NumberTypeMessage","MessageType", "RegionalReserved1", "SpeedOverGround", "PositionAccurate", "Latitude", "Longitude", "CourseOverGround", "TrueHeading", "Second", "RegionalReserved2", "CsUnit", "display", "dsc", "band", "message22", "assigned", "raimFlag", "commStateSelectorFlag", "commState", "AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB","Data","Data1","Metadata", "Received","repeatIndicator", "sourceMmsi")
+#supression des colonnes inutiles
 output3 = output3[,-c(28,29,32:39)]
 
 # pour les messages de type 4
+#suprression des éléments inutiles dans les colonnes 
 output4$V2=gsub("^.*?=","", output4$V2)
 output4$V3=gsub("^.*?=","", output4$V3)
 output4$V4=gsub("^.*?=","", output4$V4)
@@ -128,7 +138,9 @@ output4$V29=gsub("^.*?=","", output4$V29)
 output4$V30=gsub("^.*?=","", output4$V30)
 output4$V31=gsub("^.*?=","", output4$V31)
 output4$V32=gsub("[[:punct:][:lower:][:upper:]]","", output4$V32)
+#nomenclature des colonnes
 colnames(output4) <- c("NumberTypeMessage","MessageType", "imo", "callsign", "shipname", "shipType","toBow","toStern","toStarboard","toPort","positionFixingDevice","eta","draught","destination","dataTerminalReady","AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB","Data","Data1","NMEAMessage", "SyncState", "SlotTime-out", "Undefined", "AB","Data","Data1", "Metadata", "Received", "repeatIndicator", "sourceMmsi")
+#supression des colonnes inutiles
 output4 = output4[,-c(30,31,34:39)]
 
 
