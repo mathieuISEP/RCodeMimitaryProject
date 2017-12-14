@@ -154,6 +154,7 @@ a = output1[which(output1$sourceMmsi == 227006760),]
 
 shipTrajectory(227006760,output1)
 
+
 #install.packages("rworldmap")
 #install.packages("rworldxtra")
 library(rworldmap)
@@ -165,3 +166,11 @@ PlotOnStaticMap(map,lat=a$Latitude,lon = a$Longitude,destfile = "cartographie.pn
 newmap <- getMap(resolution = "high")
 plot(newmap,xlim = c(115, 182), ylim = c(30, 92), asp = 1)
 points(a$Longitude,a$Latitude,col="red",cex=1,pch=20)
+
+#Travail sur trajectoire des bateaux
+b=shipTrajectory(227006760,output1)
+write.table(b,"test.txt",sep="",row.names=FALSE)
+boatposition <-output1[,c(22,7,8)]
+attach(boatposition)
+boatposition[sort(boatposition$sourceMmsi)]
+boatposition[order(rank(sourceMmsi),Latitude)]
