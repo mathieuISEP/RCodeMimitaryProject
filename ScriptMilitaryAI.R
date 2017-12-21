@@ -45,20 +45,9 @@ output8 = output[which(NumberTypeMessage == 8),]
 #traitement des colonnes par type de message
 # pour les messages de type 1
 #suprression des éléments inutiles dans les colonnes 
-output1$V2=gsub("^.*?=","", output1$V2)
-output1$V3=gsub("^.*?=","", output1$V3)
-output1$V4=gsub("^.*?=","", output1$V4)
-output1$V5=gsub("^.*?=","", output1$V5)
-output1$V6=gsub("^.*?=","", output1$V6)
-output1$V7=gsub("^.*?=","", output1$V7)
-output1$V8=gsub("^.*?=","", output1$V8)
-output1$V9=gsub("^.*?=","", output1$V9)
-output1$V10=gsub("^.*?=","", output1$V10)
-output1$V11=gsub("^.*?=","", output1$V11)
-output1$V12=gsub("^.*?=","", output1$V12)
-output1$V20=gsub("^.*?=","", output1$V20)
-output1$V21=gsub("^.*?=","", output1$V21)
-output1$V22=gsub("^.*?=","", output1$V22)
+for (i in c(2:12,20:23)) {
+  output1[,i]=gsub("^.*?=","", output1[,i])
+}
 output1$V23=gsub("[[:punct:][:lower:][:upper:]]","", output1$V23)
 #nomenclature des colonnes
 colnames(output1) <- c("NumberTypeMessage","MessageType", "NavigationStatus", "RateOfTurn", "SpeedOverGround", "PositionAccuracy", "Latitude", "Longitude", "CourseOverGround", "TrueHeading", "Timestamp", "specialManeuverIndicator", "raimFlag", "AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB", "Data", "Data1", "Metadata", "Received", "repeatIndicator", "sourceMmsi")
@@ -66,21 +55,10 @@ colnames(output1) <- c("NumberTypeMessage","MessageType", "NavigationStatus", "R
 output1 = output1[,-c(21,22,25:39)]
 
 # pour les messages de type 2
-#suprression des éléments inutiles dans les colonnes 
-output2$V2=gsub("^.*?=","", output2$V2)
-output2$V3=gsub("^.*?=","", output2$V3)
-output2$V4=gsub("^.*?=","", output2$V4)
-output2$V5=gsub("^.*?=","", output2$V5)
-output2$V6=gsub("^.*?=","", output2$V6)
-output2$V7=gsub("^.*?=","", output2$V7)
-output2$V8=gsub("^.*?=","", output2$V8)
-output2$V9=gsub("^.*?=","", output2$V9)
-output2$V10=gsub("^.*?=","", output2$V10)
-output2$V11=gsub("^.*?=","", output2$V11)
-output2$V12=gsub("^.*?=","", output2$V12)
-output2$V20=gsub("^.*?=","", output2$V20)
-output2$V21=gsub("^.*?=","", output2$V21)
-output2$V22=gsub("^.*?=","", output2$V22)
+#suprression des éléments inutiles dans les colonnes
+for (i in c(2:12,20:23)) {
+  output2[,i]=gsub("^.*?=","", output2[,i])
+}
 output2$V23=gsub("[[:punct:][:lower:][:upper:]]","", output2$V23)
 #nomenclature des colonnes
 colnames(output2) <- c("NumberTypeMessage","MessageType", "NavigationStatus", "RateOfTurn", "SpeedOverGround", "PositionAccuracy", "Latitude", "Longitude", "CourseOverGround", "TrueHeading", "Timestamp", "specialManeuverIndicator", "raimFlag", "AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB", "Data", "Data1", "Metadata", "Received", "repeatIndicator", "sourceMmsi")
@@ -89,28 +67,9 @@ output2 = output2[,-c(21,22,25:39)]
 
 # pour les messages de type 3
 #suprression des éléments inutiles dans les colonnes 
-output3$V2=gsub("^.*?=","", output3$V2)
-output3$V3=gsub("^.*?=","", output3$V3)
-output3$V4=gsub("^.*?=","", output3$V4)
-output3$V5=gsub("^.*?=","", output3$V5)
-output3$V6=gsub("^.*?=","", output3$V6)
-output3$V7=gsub("^.*?=","", output3$V7)
-output3$V8=gsub("^.*?=","", output3$V8)
-output3$V9=gsub("^.*?=","", output3$V9)
-output3$V10=gsub("^.*?=","", output3$V10)
-output3$V11=gsub("^.*?=","", output3$V11)
-output3$V12=gsub("^.*?=","", output3$V12)
-output3$V13=gsub("^.*?=","", output3$V13)
-output3$V14=gsub("^.*?=","", output3$V14)
-output3$V15=gsub("^.*?=","", output3$V15)
-output3$V16=gsub("^.*?=","", output3$V16)
-output3$V17=gsub("^.*?=","", output3$V17)
-output3$V18=gsub("^.*?=","", output3$V18)
-output3$V19=gsub("^.*?=","", output3$V19)
-output3$V20=gsub("^.*?=","", output3$V20)
-output3$V27=gsub("^.*?=","", output3$V27)
-output3$V28=gsub("^.*?=","", output3$V28)
-output3$V29=gsub("^.*?=","", output3$V29)
+for (i in c(2:20,27:30)) {
+    output3[,i]=gsub("^.*?=","", output3[,i])
+}
 output3$V30=gsub("[[:punct:][:lower:][:upper:]]","", output3$V30)
 #nomenclature des colonnes
 colnames(output3) <- c("NumberTypeMessage","MessageType", "RegionalReserved1", "SpeedOverGround", "PositionAccurate", "Latitude", "Longitude", "CourseOverGround", "TrueHeading", "Second", "RegionalReserved2", "CsUnit", "display", "dsc", "band", "message22", "assigned", "raimFlag", "commStateSelectorFlag", "commState", "AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB","Data","Data1","Metadata", "Received","repeatIndicator", "sourceMmsi")
@@ -118,24 +77,10 @@ colnames(output3) <- c("NumberTypeMessage","MessageType", "RegionalReserved1", "
 output3 = output3[,-c(28,29,32:39)]
 
 # pour les messages de type 4
-#suprression des éléments inutiles dans les colonnes 
-output4$V2=gsub("^.*?=","", output4$V2)
-output4$V3=gsub("^.*?=","", output4$V3)
-output4$V4=gsub("^.*?=","", output4$V4)
-output4$V5=gsub("^.*?=","", output4$V5)
-output4$V6=gsub("^.*?=","", output4$V6)
-output4$V7=gsub("^.*?=","", output4$V7)
-output4$V8=gsub("^.*?=","", output4$V8)
-output4$V9=gsub("^.*?=","", output4$V9)
-output4$V10=gsub("^.*?=","", output4$V10)
-output4$V11=gsub("^.*?=","", output4$V11)
-output4$V12=gsub("^.*?=","", output4$V12)
-output4$V13=gsub("^.*?=","", output4$V13)
-output4$V14=gsub("^.*?=","", output4$V14)
-output4$V15=gsub("^.*?=","", output4$V15)
-output4$V29=gsub("^.*?=","", output4$V29)
-output4$V30=gsub("^.*?=","", output4$V30)
-output4$V31=gsub("^.*?=","", output4$V31)
+#suprression des éléments inutiles dans les colonnes
+for (i in c(2:15,29:32)) {
+  output4[,i]=gsub("^.*?=","", output4[,i])
+}
 output4$V32=gsub("[[:punct:][:lower:][:upper:]]","", output4$V32)
 #nomenclature des colonnes
 colnames(output4) <- c("NumberTypeMessage","MessageType", "imo", "callsign", "shipname", "shipType","toBow","toStern","toStarboard","toPort","positionFixingDevice","eta","draught","destination","dataTerminalReady","AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB","Data","Data1","NMEAMessage", "SyncState", "SlotTime-out", "Undefined", "AB","Data","Data1", "Metadata", "Received", "repeatIndicator", "sourceMmsi")
@@ -151,13 +96,10 @@ output1$sourceMmsi=as.numeric(output1$sourceMmsi)
 output1$Latitude = as.numeric(output1$Latitude)
 output1$Longitude = as.numeric(output1$Longitude)
 
-<<<<<<< HEAD
 output2$Latitude = as.numeric(output2$Latitude)
 output2$Longitude = as.numeric(output2$Longitude)
 
 attach(output1)
-=======
->>>>>>> 2cc3db1bea5b658bb3126d453e29b582504f1b7d
 
 lat = output2$Latitude
 lon = output2$Longitude
@@ -188,7 +130,6 @@ map = GetMap.bbox(bb$lonR,bb$latR,destfile = "cartographie.png",maptype="hybrid"
 PlotOnStaticMap(map,lat=a$Latitude,lon = a$Longitude,destfile = "cartographie.png",cex=2,pch=20)
 
 newmap <- getMap(resolution = "high")
-<<<<<<< HEAD
 plot(newmap,xlim = c(-180,180), ylim = c(-180,180), asp = 1)
 lat = output2$Latitude
 lon = output2$Longitude
@@ -209,10 +150,9 @@ for (i in 2:10){
 #DBSCAN 
 DBSCAN = dbscan(table, eps = 10, MinPts = 3)
 points(lon,lat,col=DBSCAN$cluster,cex=1,pch=20)
-=======
+
 plot(newmap,xlim = c(0, 1), ylim = c(48, 50), asp = 1)
 points(a$Longitude,a$Latitude,col="red",cex=1,pch=20)
->>>>>>> 2cc3db1bea5b658bb3126d453e29b582504f1b7d
 
 #Travail sur trajectoire des bateaux
 b=shipTrajectory(227006760,output1)
