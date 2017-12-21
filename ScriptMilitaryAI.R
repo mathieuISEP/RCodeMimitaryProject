@@ -145,15 +145,34 @@ output4 = output4[,-c(30,31,34:39)]
 
 #new_DF <- output[rowSums(is.na(output)) > 0,] #A compléter pour numbertypemessage
 
+#changement de type des variables (string à numérique)
 output1$Timestamp=as.numeric(output1$Timestamp)
 output1$sourceMmsi=as.numeric(output1$sourceMmsi)
-
-
 output1$Latitude = as.numeric(output1$Latitude)
 output1$Longitude = as.numeric(output1$Longitude)
 
+<<<<<<< HEAD
+output2$Latitude = as.numeric(output2$Latitude)
+output2$Longitude = as.numeric(output2$Longitude)
 
-a = output1[which(output1$sourceMmsi == 227006760),]
+attach(output1)
+=======
+>>>>>>> 2cc3db1bea5b658bb3126d453e29b582504f1b7d
+
+lat = output2$Latitude
+lon = output2$Longitude
+
+library(fpc)
+DBSCAN = dbscan(cbind(lat, lon), eps = 10, MinPts = 3)
+plot(lon, lat, col = DBSCAN$cluster, pch = 20)
+
+for (i in 1:5){
+km.out= kmeans(cbind(lat, lon),i,nstart = 20)
+plot(km.out)
+}
+
+a = output1[which(output1$sourceMmsi == 211511850),]
+
 
 #a = a[order(a$Timestamp),]
 
@@ -169,8 +188,31 @@ map = GetMap.bbox(bb$lonR,bb$latR,destfile = "cartographie.png",maptype="hybrid"
 PlotOnStaticMap(map,lat=a$Latitude,lon = a$Longitude,destfile = "cartographie.png",cex=2,pch=20)
 
 newmap <- getMap(resolution = "high")
+<<<<<<< HEAD
+plot(newmap,xlim = c(-180,180), ylim = c(-180,180), asp = 1)
+lat = output2$Latitude
+lon = output2$Longitude
+table = cbind(lat,lon)
+
+#K-means
+library(clusterSim)
+
+for (i in 2:10){
+  km.out = kmeans(table,i,nstart = 20)
+  #k = c('K-Means Clustering Results with K=',i)
+  plot(newmap,xlim = c(-180,180), ylim = c(-180,180), asp = 1)
+  points(lon,lat,col=(km.out$cluster+1), pch=20,cex=2)
+  print(index.DB(table,km.out$cluster)$DB)
+  invisible(readline(prompt="Press [enter] to continue"))
+}
+
+#DBSCAN 
+DBSCAN = dbscan(table, eps = 10, MinPts = 3)
+points(lon,lat,col=DBSCAN$cluster,cex=1,pch=20)
+=======
 plot(newmap,xlim = c(0, 1), ylim = c(48, 50), asp = 1)
 points(a$Longitude,a$Latitude,col="red",cex=1,pch=20)
+>>>>>>> 2cc3db1bea5b658bb3126d453e29b582504f1b7d
 
 #Travail sur trajectoire des bateaux
 b=shipTrajectory(227006760,output1)
