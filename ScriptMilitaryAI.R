@@ -146,16 +146,31 @@ output4 = output4[,-c(30,31,34:39)]
 
 #new_DF <- output[rowSums(is.na(output)) > 0,] #A compléter pour numbertypemessage
 
+#changement de type des variables (string à numérique)
 output1$Timestamp=as.numeric(output1$Timestamp)
 output1$sourceMmsi=as.numeric(output1$sourceMmsi)
-
-
 output1$Latitude = as.numeric(output1$Latitude)
 output1$Longitude = as.numeric(output1$Longitude)
 
+output2$Latitude = as.numeric(output2$Latitude)
+output2$Longitude = as.numeric(output2$Longitude)
+
 attach(output1)
 
-a = output1[which(output1$sourceMmsi == 227006760),]
+lat = output2$Latitude
+lon = output2$Longitude
+
+library(fpc)
+DBSCAN = dbscan(cbind(lat, lon), eps = 10, MinPts = 3)
+plot(lon, lat, col = DBSCAN$cluster, pch = 20)
+
+for (i in 1:5){
+km.out= kmeans(cbind(lat, lon),i,nstart = 20)
+plot(km.out)
+}
+
+a = output1[which(output1$sourceMmsi == 211511850),]
+
 
 #a = a[order(a$Timestamp),]
 
@@ -176,5 +191,10 @@ map = GetMap.bbox(bb$lonR,bb$latR,destfile = "cartographie.png",maptype="hybrid"
 PlotOnStaticMap(map,lat=a$Latitude,lon = a$Longitude,destfile = "cartographie.png",cex=2,pch=20)
 
 newmap <- getMap(resolution = "high")
-plot(newmap,xlim = c(115, 182), ylim = c(30, 92), asp = 1)
-points(a$Longitude,a$Latitude,col="red",cex=1,pch=20)
+plot(newmap,xlim = c(-180,180), ylim = c(-180,180), asp = 1)
+lat = output2$Latitude
+lon = output2$Longitude
+
+DBSCAN = dbscan(cbind(lat, lon), eps = 10, MinPts = 3)
+points(lon,lat,col=DBSCAN$cluster,cex=1,pch=20)
+
