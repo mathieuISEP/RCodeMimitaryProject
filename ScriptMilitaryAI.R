@@ -182,6 +182,7 @@ a = output1[which(output1$sourceMmsi == 211511850),]
 
 shipTrajectory(227006760,output1)
 
+
 #install.packages("rworldmap")
 #install.packages("rworldxtra")
 library(rworldmap)
@@ -194,7 +195,28 @@ newmap <- getMap(resolution = "high")
 plot(newmap,xlim = c(-180,180), ylim = c(-180,180), asp = 1)
 lat = output2$Latitude
 lon = output2$Longitude
+table = cbind(lat,lon)
 
-DBSCAN = dbscan(cbind(lat, lon), eps = 10, MinPts = 3)
+#K-means
+library(clusterSim)
+
+for (i in 2:10){
+  km.out = kmeans(table,i,nstart = 20)
+  #k = c('K-Means Clustering Results with K=',i)
+  plot(newmap,xlim = c(-180,180), ylim = c(-180,180), asp = 1)
+  points(lon,lat,col=(km.out$cluster+1), pch=20,cex=2)
+  print(index.DB(table,km.out$cluster)$DB)
+  invisible(readline(prompt="Press [enter] to continue"))
+}
+
+#DBSCAN 
+DBSCAN = dbscan(table, eps = 10, MinPts = 3)
 points(lon,lat,col=DBSCAN$cluster,cex=1,pch=20)
 
+#Travail sur trajectoire des bateaux
+b=shipTrajectory(227006760,output1)
+write.table(b,"test.txt",sep="",row.names=FALSE)
+boatposition <-output1[,c(22,7,8)]
+attach(boatposition)
+boatposition[sort(boatposition$sourceMmsi)]
+boatposition[order(rank(sourceMmsi),Latitude)]
