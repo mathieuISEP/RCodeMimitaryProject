@@ -1,5 +1,4 @@
 #set your working directory
-#output=read.csv("output.txt", sep=",", header=FALSE)
 
 #chargement du fichier
 output=read.csv("outputtry.txt", sep=",", header=FALSE)
@@ -153,17 +152,10 @@ output1$sourceMmsi=as.numeric(output1$sourceMmsi)
 output1$Latitude = as.numeric(output1$Latitude)
 output1$Longitude = as.numeric(output1$Longitude)
 
-attach(output1)
 
 a = output1[which(output1$sourceMmsi == 227006760),]
 
 #a = a[order(a$Timestamp),]
-
-#Calculate Distance from  Latitude and Longitude
-#library(geosphere)
-#pos1 = (c(output1$Latitude[7],output1$Longitude[7]))
-#pos2 = (c(output1$Latitude[8],output1$Longitude[8]))
-#earthDist(Latitude[7],Longitude[7],Latitude[8],Longitude[8])
 
 shipTrajectory(227006760,output1)
 
@@ -177,13 +169,13 @@ map = GetMap.bbox(bb$lonR,bb$latR,destfile = "cartographie.png",maptype="hybrid"
 PlotOnStaticMap(map,lat=a$Latitude,lon = a$Longitude,destfile = "cartographie.png",cex=2,pch=20)
 
 newmap <- getMap(resolution = "high")
-plot(newmap,xlim = c(115, 182), ylim = c(30, 92), asp = 1)
+plot(newmap,xlim = c(0, 1), ylim = c(48, 50), asp = 1)
 points(a$Longitude,a$Latitude,col="red",cex=1,pch=20)
 
 #Travail sur trajectoire des bateaux
 b=shipTrajectory(227006760,output1)
 write.table(b,"test.txt",sep="",row.names=FALSE)
-boatposition <-output1[,c(22,7,8)]
-attach(boatposition)
+boatpositiontest <-output1[,c(22,7,8)]
+#attach(boatpositiontest)
 boatposition[sort(boatposition$sourceMmsi)]
 boatposition[order(rank(sourceMmsi),Latitude)]
