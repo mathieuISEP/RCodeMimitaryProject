@@ -104,7 +104,7 @@ attach(output1)
 lat = output2$Latitude
 lon = output2$Longitude
 
-library(fpc)
+#library(fpc)
 DBSCAN = dbscan(cbind(lat, lon), eps = 10, MinPts = 3)
 plot(lon, lat, col = DBSCAN$cluster, pch = 20)
 
@@ -123,8 +123,8 @@ shipTrajectory(227006760,output1)
 
 #install.packages("rworldmap")
 #install.packages("rworldxtra")
-library(rworldmap)
-library(rworldxtra)
+#library(rworldmap)
+#library(rworldxtra)
 bb = qbbox(lat = a$Latitude,lon = a$Longitude)
 map = GetMap.bbox(bb$lonR,bb$latR,destfile = "cartographie.png",maptype="hybrid")
 PlotOnStaticMap(map,lat=a$Latitude,lon = a$Longitude,destfile = "cartographie.png",cex=2,pch=20)
@@ -136,7 +136,7 @@ lon = output2$Longitude
 table = cbind(lat,lon)
 
 #K-means
-library(clusterSim)
+#library(clusterSim)
 
 for (i in 2:10){
   km.out = kmeans(table,i,nstart = 20)
