@@ -1,16 +1,15 @@
 BoatsTrajectories <- function (dataset){
   
-  dt = dataset
-  dt$Latitude = as.double(dt$Latitude)
-  dt$Longitude = as.double(dt$Longitude)
+ dt = dataset
+ dt$Latitude = as.double(dt$Latitude)
+ dt$Longitude = as.double(dt$Longitude)
   
-  UniqueBoatPosition =  dt[!duplicated(dt$sourceMmsi)]
-  attach(UniqueBoatPosition)
-  
-  for (i in 1:(length(UniqueBoatPosition)-1)){
-   shipTrajectory(UniqueBoatPosition)
+ UniqueBoatPosition =  dt[!duplicated(dt$sourceMmsi),]
+ UniqueBoatID = UniqueBoatPosition[,c("sourceMmsi"),drop = F] 
+
+  for (i in 1:(nrow(UniqueBoatID))){
+   cbind(UniqueBoatID,shipTrajectory(sourceMmsi[i],dt))
     
   }
-  #return(earthDist(lat1,long1,lat2,long2))
-  
+
 }

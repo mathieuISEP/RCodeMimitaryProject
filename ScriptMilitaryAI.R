@@ -188,7 +188,7 @@ map = GetMap.bbox(bb$lonR,bb$latR,destfile = "cartographie.png",maptype="hybrid"
 PlotOnStaticMap(map,lat=a$Latitude,lon = a$Longitude,destfile = "cartographie.png",cex=2,pch=20)
 
 newmap <- getMap(resolution = "high")
-<<<<<<< HEAD
+
 plot(newmap,xlim = c(-180,180), ylim = c(-180,180), asp = 1)
 lat = output2$Latitude
 lon = output2$Longitude
@@ -209,10 +209,9 @@ for (i in 2:10){
 #DBSCAN 
 DBSCAN = dbscan(table, eps = 10, MinPts = 3)
 points(lon,lat,col=DBSCAN$cluster,cex=1,pch=20)
-=======
+
 plot(newmap,xlim = c(0, 1), ylim = c(48, 50), asp = 1)
 points(a$Longitude,a$Latitude,col="red",cex=1,pch=20)
->>>>>>> 2cc3db1bea5b658bb3126d453e29b582504f1b7d
 
 #Travail sur trajectoire des bateaux
 b=shipTrajectory(227006760,output1)
@@ -221,3 +220,10 @@ boatpositiontest <-output1[,c(22,7,8)]
 #attach(boatpositiontest)
 boatposition[sort(boatposition$sourceMmsi)]
 boatposition[order(rank(sourceMmsi),Latitude)]
+
+#UniqueBoatPosition =  output1[!duplicated(output1$sourceMmsi),]
+#UniqueBoatID <- UniqueBoatPosition[,c(22),drop = F]
+
+BoatsTrajectories(output1)
+
+
