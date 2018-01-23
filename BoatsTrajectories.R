@@ -7,6 +7,7 @@ BoatsTrajectories <- function (dataset){
  UniqueBoatPosition =  dt[!duplicated(dt$sourceMmsi),,drop=F]
  UniqueBoatID = UniqueBoatPosition[,c("sourceMmsi"),drop = F] 
  UniqueBoatIdColumned <- as.data.frame(t(UniqueBoatID))
+ colnames(UniqueBoatIdColumned)<-(UniqueBoatIdColumned[1,])
 
   for (i in 1:(length(UniqueBoatIdColumned))){
     

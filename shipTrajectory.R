@@ -17,8 +17,10 @@ shipTrajectory <- function (shipId,dataset){
       latlong=c(latlong,earthDist(lat1,long1,lat2,long2))
       i <- i + 1
       
-     
+      
     }
-    return(data.frame(latlong))
-  
+    latlong<-data.frame(latlong)
+    colnames(latlong)<-x
+    return(latlong)
+    
 }

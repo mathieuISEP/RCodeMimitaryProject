@@ -163,8 +163,8 @@ boatpositiontest <-output1[,c(22,7,8)]
 boatposition[sort(boatposition$sourceMmsi)]
 boatposition[order(rank(sourceMmsi),Latitude)]
 
-#UniqueBoatPosition =  output1[!duplicated(output1$sourceMmsi),]
-#UniqueBoatID <- UniqueBoatPosition[,c(22),drop = F]
+UniqueBoatPosition =  output1[!duplicated(output1$sourceMmsi),]
+UniqueBoatID <- UniqueBoatPosition[,c(22),drop = F]
 
 BoatsTrajectories(output1)
 
