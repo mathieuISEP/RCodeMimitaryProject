@@ -156,7 +156,7 @@ plot(newmap,xlim = c(0, 1), ylim = c(48, 50), asp = 1)
 points(a$Longitude,a$Latitude,col="red",cex=1,pch=20)
 
 #Travail sur trajectoire des bateaux
-b=shipTrajectory(227006760,output1)
+ab=shipTrajectory(227006760,output1)
 write.table(b,"test.txt",sep="",row.names=FALSE)
 boatpositiontest <-output1[,c(22,7,8)]
 #attach(boatpositiontest)
