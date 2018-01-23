@@ -6,13 +6,12 @@ BoatsTrajectories <- function (dataset){
   
  UniqueBoatPosition =  dt[!duplicated(dt$sourceMmsi),,drop=F]
  UniqueBoatID = UniqueBoatPosition[,c("sourceMmsi"),drop = F] 
- Traject<- as.data.frame(matrix(0, ncol = nrow(UniqueBoatID), nrow = 20))
- 
-  
-  for (i in 1:(length(Traject))){
+ UniqueBoatIdColumned <- as.data.frame(t(UniqueBoatID))
+
+  for (i in 1:(length(UniqueBoatIdColumned))){
     
-    Traject = rbind(Traject,shipTrajectory(UniqueBoatID$sourceMmsi[i],dt))
+    UniqueBoatIdColumned = append(UniqueBoatIdColumned,shipTrajectory(UniqueBoatID$sourceMmsi[i],dt))
     i <- i + 1
    }
-return(data.frame(UniqueBoatID))
+return(as.data.frame(UniqueBoatIdColumned))
 }
