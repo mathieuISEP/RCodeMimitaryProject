@@ -168,4 +168,26 @@ UniqueBoatID <- UniqueBoatPosition[,c(22),drop = F]
 
 BoatsTrajectories(output1)
 
+shipTrajectory(227006760,output1)
+UniqueBoatIdColumned = rbind(UniqueBoatIdColumned[,2],shipTrajectory(227006760,output1))
+as.data.frame(UniqueBoatIdColumnedtry)
 
+for (i in 1:5){
+  
+  tes=UniqueBoatIdColumned[,i]
+  i <- i + 1
+  print(tes)
+}
+
+for (i in 1:5){
+  
+  UniqueBoatIdColumned = rbind(UniqueBoatIdColumned[,i],shipTrajectory(UniqueBoatID$sourceMmsi[i],dt))
+  i <- i + 1
+}
+
+for (i in 1:5){
+  
+  Allboatstrajectoriesloop = rbind(UniqueBoatIdColumned[,i],shipTrajectory(UniqueBoatID$sourceMmsi[i],dt))
+  Allboatstrajectories = c(Allboatstrajectories,Allboatstrajectoriesloop)
+  i <- i + 1
+}
