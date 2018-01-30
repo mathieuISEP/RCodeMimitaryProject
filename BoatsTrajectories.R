@@ -9,12 +9,14 @@ BoatsTrajectories <- function (dataset){
  UniqueBoatID = UniqueBoatPosition[,c("sourceMmsi"),drop = F] 
  UniqueBoatIdColumned <- as.data.frame(t(UniqueBoatID))
  colnames(UniqueBoatIdColumned)<-(UniqueBoatIdColumned[1,])
+ UniqueBoatIdColumned<-(UniqueBoatIdColumned[-c(1), ])
 
-  for (i in 1:length(UniqueBoatIdColumned)){
-  # print(i)
+  for (i in 1:5){
+  
     Allboatstrajectoriesloop = rbind(UniqueBoatIdColumned[,i],shipTrajectory(UniqueBoatID$sourceMmsi[i],dt2))
-    # Allboatstrajectories = c(Allboatstrajectories,Allboatstrajectoriesloop)
+    Allboatstrajectories = c(Allboatstrajectories,Allboatstrajectoriesloop)
     i <- i + 1
-   }
-return(Allboatstrajectoriesloop)
+  }
+ 
+return(Allboatstrajectories)
 }

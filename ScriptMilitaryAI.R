@@ -96,13 +96,8 @@ output1$sourceMmsi=as.numeric(output1$sourceMmsi)
 output1$Latitude = as.numeric(output1$Latitude)
 output1$Longitude = as.numeric(output1$Longitude)
 
-output2$Latitude = as.numeric(output2$Latitude)
-output2$Longitude = as.numeric(output2$Longitude)
-
 attach(output1)
 
-lat = output2$Latitude
-lon = output2$Longitude
 
 library(fpc)
 DBSCAN = dbscan(cbind(lat, lon), eps = 10, MinPts = 3)
@@ -112,13 +107,6 @@ for (i in 1:5){
 km.out= kmeans(cbind(lat, lon),i,nstart = 20)
 plot(km.out)
 }
-
-a = output1[which(output1$sourceMmsi == 211511850),]
-
-
-#a = a[order(a$Timestamp),]
-
-shipTrajectory(227006760,output1)
 
 
 #install.packages("rworldmap")
@@ -155,50 +143,37 @@ points(lon,lat,col=DBSCAN$cluster,cex=1,pch=20)
 plot(newmap,xlim = c(0, 1), ylim = c(48, 50), asp = 1)
 points(a$Longitude,a$Latitude,col="red",cex=1,pch=20)
 
-#Travail sur trajectoire des bateaux
-ab=shipTrajectory(227006760,output1)
-write.table(b,"test.txt",sep="",row.names=FALSE)
-boatpositiontest <-output1[,c(22,7,8)]
-#attach(boatpositiontest)
-boatposition[sort(boatposition$sourceMmsi)]
-boatposition[order(rank(sourceMmsi),Latitude)]
 
+#BoatsTrajectories draft (column works, trying by row)
 UniqueBoatPosition =  output1[!duplicated(output1$sourceMmsi),]
 UniqueBoatID <- UniqueBoatPosition[,c(22),drop = F]
 
-BoatsTrajectories(output1)
+qqq=BoatsTrajectories(output1)
+qqqq=BoatsTrajectoriesrow(output1)
 
-shipTrajectory(227006760,output1)
-UniqueBoatIdColumned = rbind(UniqueBoatIdColumned[,2],shipTrajectory(227006760,output1))
+abb=t(shipTrajectory(227006760,output1))
+
+UniqueBoatIdrowtry = rbind(UniqueBoatIDrow[1,],t(shipTrajectory(UniqueBoatID$sourceMmsi[1],output1)))
+shipTrajectory(UniqueBoatID$sourceMmsi[1],output1)
+
+UniqueBoatIdColumnedtry = rbind(UniqueBoatIdColumned[,2],shipTrajectory(UniqueBoatID$sourceMmsi[2],output1))
 as.data.frame(UniqueBoatIdColumnedtry)
 
 # for (i in 1:5){
-#   
-#   tes=UniqueBoatIdColumned[,i]
+#  tes=UniqueBoatIdColumned[,i]
 #   i <- i + 1
 #   print(tes)
 # }
 # 
 # for (i in 1:5){
 #   
-#   UniqueBoatIdColumned = rbind(UniqueBoatIdColumned[,i],shipTrajectory(UniqueBoatID$sourceMmsi[i],dt))
-#   i <- i + 1
+#   UniqueBoatIdColumnedtest = rbind(UniqueBoatIdColumned[,i],shipTrajectory(UniqueBoatID$sourceMmsi[i],dt))
+#  i <- i + 1
+#  print(UniqueBoatIdColumnedtest)
 # }
-# 
 # for (i in 1:5){
 #   
 #   Allboatstrajectoriesloop = rbind(UniqueBoatIdColumned[,i],shipTrajectory(UniqueBoatID$sourceMmsi[i],dt))
 #   Allboatstrajectories = c(Allboatstrajectories,Allboatstrajectoriesloop)
 #   i <- i + 1
 # }
-
-#Test Mathieu BoatPosition
-dt = output1
-dt$Latitude = as.double(dt$Latitude)
-dt$Longitude = as.double(dt$Longitude)
-Allboatstrajectories=c()
-
-UniqueBoatPosition =  dt[!duplicated(dt$sourceMmsi),,drop=F]
-UniqueBoatID = UniqueBoatPosition[,c("sourceMmsi"),drop = F] 
-UniqueBoatIdColumned <- as.data.frame(t(UniqueBoatID))
-colnames(UniqueBoatIdColumned)<-(UniqueBoatIdColumned[1,])
