@@ -88,8 +88,6 @@ colnames(output4) <- c("NumberTypeMessage","MessageType", "imo", "callsign", "sh
 output4 = output4[,-c(30,31,34:39)]
 
 
-#new_DF <- output[rowSums(is.na(output)) > 0,] #A compléter pour numbertypemessage
-
 #changement de type des variables (string à numérique)
 output1$Timestamp=as.numeric(output1$Timestamp)
 output1$sourceMmsi=as.numeric(output1$sourceMmsi)
@@ -150,30 +148,10 @@ UniqueBoatID <- UniqueBoatPosition[,c(22),drop = F]
 
 qqq=BoatsTrajectories(output1)
 qqqq=BoatsTrajectoriesrow(output1)
-
+ab=shipTrajectory(227006760,output1)
 abb=t(shipTrajectory(227006760,output1))
 
 UniqueBoatIdrowtry = rbind(UniqueBoatIDrow[1,],t(shipTrajectory(UniqueBoatID$sourceMmsi[1],output1)))
 shipTrajectory(UniqueBoatID$sourceMmsi[1],output1)
-
-UniqueBoatIdColumnedtry = rbind(UniqueBoatIdColumned[,2],shipTrajectory(UniqueBoatID$sourceMmsi[2],output1))
-as.data.frame(UniqueBoatIdColumnedtry)
-
-# for (i in 1:5){
-#  tes=UniqueBoatIdColumned[,i]
-#   i <- i + 1
-#   print(tes)
-# }
-# 
-# for (i in 1:5){
-#   
-#   UniqueBoatIdColumnedtest = rbind(UniqueBoatIdColumned[,i],shipTrajectory(UniqueBoatID$sourceMmsi[i],dt))
-#  i <- i + 1
-#  print(UniqueBoatIdColumnedtest)
-# }
-# for (i in 1:5){
-#   
-#   Allboatstrajectoriesloop = rbind(UniqueBoatIdColumned[,i],shipTrajectory(UniqueBoatID$sourceMmsi[i],dt))
-#   Allboatstrajectories = c(Allboatstrajectories,Allboatstrajectoriesloop)
-#   i <- i + 1
-# }
+bbb = t(rbind(UniqueBoatIdColumned[,1],shipTrajectory(UniqueBoatID$sourceMmsi[1],output1)))
+bbb=data.frame(bbb)

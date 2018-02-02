@@ -11,7 +11,7 @@ BoatsTrajectories <- function (dataset){
  colnames(UniqueBoatIdColumned)<-(UniqueBoatIdColumned[1,])
  UniqueBoatIdColumned<-(UniqueBoatIdColumned[-c(1), ])
 
-  for (i in 1:5){
+  for (i in 1:length(UniqueBoatIdColumned)){
   
     Allboatstrajectoriesloop = rbind(UniqueBoatIdColumned[,i],shipTrajectory(UniqueBoatID$sourceMmsi[i],dt2))
     Allboatstrajectories = c(Allboatstrajectories,Allboatstrajectoriesloop)
