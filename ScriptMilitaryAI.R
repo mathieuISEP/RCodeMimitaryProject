@@ -1,9 +1,9 @@
-#set your working directory
+#Set your working directory
 
-#chargement du fichier
+#Chargement du fichier
 output=read.csv("outputtry.txt", sep=",", header=FALSE)
 
-#création de la colonne NumberTypeMessage
+#Création de la colonne NumberTypeMessage
 output["NumberTypeMessage"]<- NA
 
 #Nomenclature des différents types de messages
@@ -42,59 +42,65 @@ output7 = output[which(NumberTypeMessage == 7),]
 output8 = output[which(NumberTypeMessage == 8),]
 
 
-#traitement des colonnes par type de message
-# pour les messages de type 1
-#suprression des éléments inutiles dans les colonnes 
+#Traitement des colonnes par type de message
+#Pour les messages de type 1
+#Suprression des éléments inutiles dans les colonnes 
 for (i in c(2:12,20:23)) {
   output1[,i]=gsub("^.*?=","", output1[,i])
 }
 output1$V23=gsub("[[:punct:][:lower:][:upper:]]","", output1$V23)
-#nomenclature des colonnes
+#Nomenclature des colonnes
 colnames(output1) <- c("NumberTypeMessage","MessageType", "NavigationStatus", "RateOfTurn", "SpeedOverGround", "PositionAccuracy", "Latitude", "Longitude", "CourseOverGround", "TrueHeading", "Timestamp", "specialManeuverIndicator", "raimFlag", "AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB", "Data", "Data1", "Metadata", "Received", "repeatIndicator", "sourceMmsi")
-#supression des colonnes inutiles
+#Supression des colonnes inutiles
 output1 = output1[,-c(21,22,25:39)]
 
-# pour les messages de type 2
-#suprression des éléments inutiles dans les colonnes
+#Pour les messages de type 2
+#Suprression des éléments inutiles dans les colonnes
 for (i in c(2:12,20:23)) {
   output2[,i]=gsub("^.*?=","", output2[,i])
 }
 output2$V23=gsub("[[:punct:][:lower:][:upper:]]","", output2$V23)
-#nomenclature des colonnes
+#Nomenclature des colonnes
 colnames(output2) <- c("NumberTypeMessage","MessageType", "NavigationStatus", "RateOfTurn", "SpeedOverGround", "PositionAccuracy", "Latitude", "Longitude", "CourseOverGround", "TrueHeading", "Timestamp", "specialManeuverIndicator", "raimFlag", "AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB", "Data", "Data1", "Metadata", "Received", "repeatIndicator", "sourceMmsi")
-#supression des colonnes inutiles
+#Supression des colonnes inutiles
 output2 = output2[,-c(21,22,25:39)]
 
-# pour les messages de type 3
-#suprression des éléments inutiles dans les colonnes 
+#Pour les messages de type 3
+#Suprression des éléments inutiles dans les colonnes 
 for (i in c(2:20,27:30)) {
     output3[,i]=gsub("^.*?=","", output3[,i])
 }
 output3$V30=gsub("[[:punct:][:lower:][:upper:]]","", output3$V30)
-#nomenclature des colonnes
+#Nomenclature des colonnes
 colnames(output3) <- c("NumberTypeMessage","MessageType", "RegionalReserved1", "SpeedOverGround", "PositionAccurate", "Latitude", "Longitude", "CourseOverGround", "TrueHeading", "Second", "RegionalReserved2", "CsUnit", "display", "dsc", "band", "message22", "assigned", "raimFlag", "commStateSelectorFlag", "commState", "AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB","Data","Data1","Metadata", "Received","repeatIndicator", "sourceMmsi")
-#supression des colonnes inutiles
+#Supression des colonnes inutiles
 output3 = output3[,-c(28,29,32:39)]
 
-# pour les messages de type 4
-#suprression des éléments inutiles dans les colonnes
+#Pour les messages de type 4
+#Suprression des éléments inutiles dans les colonnes
 for (i in c(2:15,29:32)) {
   output4[,i]=gsub("^.*?=","", output4[,i])
 }
 output4$V32=gsub("[[:punct:][:lower:][:upper:]]","", output4$V32)
-#nomenclature des colonnes
+#Nomenclature des colonnes
 colnames(output4) <- c("NumberTypeMessage","MessageType", "imo", "callsign", "shipname", "shipType","toBow","toStern","toStarboard","toPort","positionFixingDevice","eta","draught","destination","dataTerminalReady","AISMessage", "SyncState", "SlotTime-out", "Undefined", "AB","Data","Data1","NMEAMessage", "SyncState", "SlotTime-out", "Undefined", "AB","Data","Data1", "Metadata", "Received", "repeatIndicator", "sourceMmsi")
-#supression des colonnes inutiles
+#Supression des colonnes inutiles
 output4 = output4[,-c(30,31,34:39)]
 
 
-#changement de type des variables (string à numérique)
+#Changement de type des variables (string à numérique)
 output1$Timestamp=as.numeric(output1$Timestamp)
 output1$sourceMmsi=as.numeric(output1$sourceMmsi)
 output1$Latitude = as.numeric(output1$Latitude)
 output1$Longitude = as.numeric(output1$Longitude)
-
 attach(output1)
+
+
+#Trajectoire de bateau
+ExempleBateau=shipTrajectory(227006760,output1)
+View(ExempleBateau)
+ExempleBateaux=BoatsTrajectories(output1)
+print(ExempleBateaux)
 
 
 library(fpc)
@@ -142,16 +148,6 @@ plot(newmap,xlim = c(0, 1), ylim = c(48, 50), asp = 1)
 points(a$Longitude,a$Latitude,col="red",cex=1,pch=20)
 
 
-#BoatsTrajectories draft (column works, trying by row)
-UniqueBoatPosition =  output1[!duplicated(output1$sourceMmsi),]
-UniqueBoatID <- UniqueBoatPosition[,c(22),drop = F]
 
-qqq=BoatsTrajectories(output1)
-qqqq=BoatsTrajectoriesrow(output1)
-ab=shipTrajectory(227006760,output1)
-abb=t(shipTrajectory(227006760,output1))
 
-UniqueBoatIdrowtry = rbind(UniqueBoatIDrow[1,],t(shipTrajectory(UniqueBoatID$sourceMmsi[1],output1)))
-shipTrajectory(UniqueBoatID$sourceMmsi[1],output1)
-bbb = t(rbind(UniqueBoatIdColumned[,1],shipTrajectory(UniqueBoatID$sourceMmsi[1],output1)))
-bbb=data.frame(bbb)
+
