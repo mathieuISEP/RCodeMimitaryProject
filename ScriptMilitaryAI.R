@@ -88,11 +88,14 @@ colnames(output4) <- c("NumberTypeMessage","MessageType", "imo", "callsign", "sh
 output4 = output4[,-c(30,31,34:39)]
 
 
+
 #Changement de type des variables (string à numérique)
 output1$Timestamp=as.numeric(output1$Timestamp)
 output1$sourceMmsi=as.numeric(output1$sourceMmsi)
 output1$Latitude = as.numeric(output1$Latitude)
 output1$Longitude = as.numeric(output1$Longitude)
+output2$Latitude = as.numeric(output2$Latitude)
+output2$Longitude = as.numeric(output2$Longitude)
 attach(output1)
 
 
@@ -103,33 +106,18 @@ ExempleBateaux=BoatsTrajectories(output1)
 print(ExempleBateaux)
 
 
-library(fpc)
-DBSCAN = dbscan(cbind(lat, lon), eps = 10, MinPts = 3)
-plot(lon, lat, col = DBSCAN$cluster, pch = 20)
-
-for (i in 1:5){
-km.out= kmeans(cbind(lat, lon),i,nstart = 20)
-plot(km.out)
-}
-
-
-#install.packages("rworldmap")
-#install.packages("rworldxtra")
-#library(rworldmap)
-#library(rworldxtra)
-bb = qbbox(lat = a$Latitude,lon = a$Longitude)
-map = GetMap.bbox(bb$lonR,bb$latR,destfile = "cartographie.png",maptype="hybrid")
-PlotOnStaticMap(map,lat=a$Latitude,lon = a$Longitude,destfile = "cartographie.png",cex=2,pch=20)
-
+#Map creation
+library(rworldmap)
+library(rworldxtra)
 newmap <- getMap(resolution = "high")
-
 plot(newmap,xlim = c(-180,180), ylim = c(-180,180), asp = 1)
-lat = output2$Latitude
-lon = output2$Longitude
+lat = output1$Latitude
+lon = output1$Longitude
 table = cbind(lat,lon)
 
+
 #K-means
-#library(clusterSim)
+library(clusterSim)
 
 for (i in 2:10){
   km.out = kmeans(table,i,nstart = 20)
@@ -140,14 +128,34 @@ for (i in 2:10){
   invisible(readline(prompt="Press [enter] to continue"))
 }
 
-#DBSCAN 
-DBSCAN = dbscan(table, eps = 10, MinPts = 3)
-points(lon,lat,col=DBSCAN$cluster,cex=1,pch=20)
+#Let us apply kmeans for k=3 clusters 
+kmm = kmeans(table,3,nstart = 50,iter.max = 15)  
+kmm
 
-plot(newmap,xlim = c(0, 1), ylim = c(48, 50), asp = 1)
-points(a$Longitude,a$Latitude,col="red",cex=1,pch=20)
+#Elbow Method for finding the optimal number of clusters
+set.seed(123)
+# Compute and plot wss for k = 2 to k = 15.
+k.max <- 10
+data <- table
+wss <- sapply(1:k.max, 
+              function(k){kmeans(data, k, nstart=50,iter.max = 30 )$tot.withinss})
+wss
+plot(1:k.max, wss,
+     main='Elbow Method',
+     type="b", pch = 19, frame = FALSE, 
+     xlab="Number of clusters K",
+     ylab="Total within-clusters sum of squares")
 
 
-
-
-
+#DBSCAN
+library(fpc)
+lat = output2$Latitude
+lon = output2$Longitude
+table = cbind(lat,lon)
+table = data.frame(table)
+table$lat = as.numeric(table$lat)
+table$lon = as.numeric(table$lon)
+newmap <- getMap(resolution = "high")
+DBSCAN = dbscan(table, eps = 25, MinPts = 10)
+plot(newmap,xlim = c(0, 1), ylim = c(40, 60), asp = 1)
+points(lon,lat,col=DBSCAN$cluster+1,cex=1,pch=20)
